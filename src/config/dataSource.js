@@ -17,7 +17,7 @@ const dataSource = new typeorm.DataSource({
 	password: process.env.DB_PASSWORD || 'postgres',
 	database: process.env.DB_NAME || 'naromaro',
 	synchronize: true,
-	entities: [dirPath + '/../entity/Post.js', dirPath + '/../entity/User.js'],
+	entities: [dirPath + '/../entity/Post.js', dirPath + '/../entity/category.js'],
 });
 
 export default dataSource;

@@ -18,6 +18,17 @@ const postSchema = new EntitySchema({
 			length: 255,
 			nullable: true,
 		},
+		write:{
+			type:'varchar',
+			length: 255,
+		},//db 저장 데이터추가
+		when:{
+			type:'date',
+			},
+		isPicked:{
+			type:'boolean',
+		}
+		
 	},
 });
 
