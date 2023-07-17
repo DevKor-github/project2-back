@@ -3,3 +3,5 @@ node_modules/
 dist/
 .env
 logs/
+
+//여기는 github에 안 올릴 폴더들을 명시한다
