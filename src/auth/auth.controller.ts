@@ -28,7 +28,7 @@ export class AuthController {
     }
   }
 
-  @Get('/login')
+  @Post('/login')
   @UseGuards(AuthGuard('local'))
   async login(@Req() req, @Res() res: Response) {
     try {
