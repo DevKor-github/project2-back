@@ -10,17 +10,23 @@ export class PostService {
     private readonly postRepository: Repository<PostEntity>,
   ) {}
 
-  async insertPost(content: string) {
-    await this.postRepository.insert({ content, isPicked: false });
+  async insertPost(content: string, id: number) {
+    await this.postRepository.insert({
+      content,
+      isPicked: false,
+      user: { id },
+    });
   }
 
-  async getPosts() {
-    return await this.postRepository.find({ where: { isPicked: true } });
+  async getPosts(id: number) {
+    return await this.postRepository.find({
+      where: { isPicked: true, user: { id } },
+    });
   }
 
-  async randomlyPickPost() {
+  async randomlyPickPost(id: number) {
     const pickedPost = await this.postRepository.findOne({
-      where: { isPicked: false },
+      where: { isPicked: false, user: { id } },
     });
     if (pickedPost) {
       pickedPost.isPicked = true;

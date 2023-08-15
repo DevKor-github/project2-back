@@ -1,21 +1,25 @@
-import { Controller, Get, Body, Post } from '@nestjs/common';
+import { Controller, Get, Body, Post, Req, UseGuards } from '@nestjs/common';
 import { PostService } from './post.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get('/')
-  async getPosts() {
-    return await this.postService.getPosts();
+  @UseGuards(AuthGuard('jwt'))
+  async getPosts(@Req() req) {
+    return await this.postService.getPosts(req.user.id);
   }
   @Get('/pick')
-  async pickPost() {
-    return await this.postService.randomlyPickPost();
+  @UseGuards(AuthGuard('jwt'))
+  async pickPost(@Req() req) {
+    return await this.postService.randomlyPickPost(req.user.id);
   }
 
   @Post('/insert')
-  async insertPost(@Body() body: { content: string }) {
-    await this.postService.insertPost(body.content);
+  @UseGuards(AuthGuard('jwt'))
+  async insertPost(@Req() req, @Body() body: { content: string }) {
+    await this.postService.insertPost(body.content, req.user.id);
   }
 }
