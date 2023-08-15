@@ -33,7 +33,7 @@ export class AuthController {
   async login(@Req() req, @Res() res: Response) {
     try {
       const jwtPayload: JwtPayload = {
-        iat: Date.now().toString(),
+        iat: new Date().toISOString(),
         id: req.user.id,
       };
       const token = await this.authService.getToken(jwtPayload);
