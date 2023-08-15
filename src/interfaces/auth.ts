@@ -3,7 +3,7 @@ export interface User {
 }
 
 export interface JwtPayload extends User {
-  iat: string;
+  signedAt: string;
 }
 
 export interface RefreshTokenPayload extends JwtPayload {

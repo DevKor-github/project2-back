@@ -33,7 +33,7 @@ export class AuthController {
   async login(@Req() req, @Res() res: Response) {
     try {
       const jwtPayload: JwtPayload = {
-        iat: new Date().toISOString(),
+        signedAt: new Date().toISOString(),
         id: req.user.id,
       };
       const token = await this.authService.getToken(jwtPayload);
@@ -58,7 +58,7 @@ export class AuthController {
       await this.authService.checkRefreshToken(refreshToken, id);
       const payload: JwtPayload = {
         id,
-        iat: new Date().toISOString(),
+        signedAt: new Date().toISOString(),
       };
       const token = await this.authService.getToken(payload);
       await this.authService.saveRefreshToken(token.refreshToken, id);
