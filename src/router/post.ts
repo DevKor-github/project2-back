@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', postController.getPostList);
 router.get('/Pick', postController.pickPost);
-router.get('/delete', postController.deletePost);
+router.get('/delete/:id', postController.deletePost);
 router.post('/create', postController.createPost);
-router.get('/update', postController.createPost);
+router.post('/update/:id', postController.updatePost);
 export default router;

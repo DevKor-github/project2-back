@@ -5,6 +5,7 @@ import http from 'http';
 import dataSource from './config/dataSource';
 import router from './router/index';
 import errorHandler from './middlewares/errorHandler';
+import { authChecker } from './middlewares/auth';
 
 const connectDB = async () => {
   try {
@@ -23,6 +24,7 @@ const loadExpressApp = async () => {
   app.use(express.json());
   app.enable('trust proxy');
 
+  app.use(authChecker);
   app.use(router);
   app.use(errorHandler);
   app.all('*', (_, res) => {

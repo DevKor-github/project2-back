@@ -4,11 +4,10 @@ import { Post } from '../entity/Post';
 
 const postRepository = dataSource.getRepository(Post);
 const categoryRepository = dataSource.getRepository(Category);
-const insertPost = async (name) => {};
 //조회
-export const getPostList = async () => {
+export const getPostList = async (req, categoryName: string) => {
   try {
-    const postList = await postRepository.find();
+    const postList = await postRepository.find({});
     return postList;
   } catch (err) {
     console.error(err);
@@ -29,21 +28,16 @@ export const pickPost = async () => {
 export const deletePost = async (req) => {
   try {
     const post = await postRepository.findOne({ where: { id: req.params.id } });
-    //안될시에 하는거 controller에서 처리
-    if (post != null) {
-      await postRepository.delete(post);
-    }
-    return post;
+    await postRepository.delete(post);
   } catch (err) {
     console.error(err);
   }
 };
-//만들기(이렇게 해도 되나>?)
 export const createPost = async (req, categoryName: string) => {
   try {
     const category = await categoryRepository.findOne({
       where: { color: categoryName },
-    });
+    }); //왜 찾는함수를 썼는지??
 
     const Post = await postRepository.create({
       name: req.body.name,
@@ -62,7 +56,7 @@ export const createPost = async (req, categoryName: string) => {
 export const updatePost = async (req) => {
   try {
     const post = await postRepository.update(
-      { id: req.id },
+      { id: req.params.id },
       {
         name: req.body.name,
         write: req.body.write,
